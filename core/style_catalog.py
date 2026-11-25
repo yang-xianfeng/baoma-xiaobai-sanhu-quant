@@ -153,18 +153,17 @@ def build_style_summary(
             continue
 
         amount = sum(float(s.get("amount") or 0.0) for s in members)
-        nets = []
-        flow_quality = "none"
-        for s in members:
-            q = s.get("flow_quality")
-            if q == "order_flow":
-                flow_quality = "order_flow"
-                nets.append(float(s.get("main_net") or 0.0))
-            elif q == "aggregate":
-                if flow_quality != "order_flow":
-                    flow_quality = "aggregate"
-                nets.append(float(s.get("net_inflow") or 0.0))
-        net = sum(nets) if nets else None
+        order_members = [s for s in members if s.get("flow_quality") == "order_flow"]
+        aggregate_members = [s for s in members if s.get("flow_quality") == "aggregate"]
+        if order_members:
+            flow_quality = "order_flow"
+            net = sum(float(s.get("main_net") or 0.0) for s in order_members)
+        elif aggregate_members:
+            flow_quality = "aggregate"
+            net = sum(float(s.get("net_inflow") or 0.0) for s in aggregate_members)
+        else:
+            flow_quality = "none"
+            net = None
 
         if members and amount > 0:
             pct = sum(float(s.get("pct") or 0.0) * float(s.get("amount") or 0.0) for s in members) / amount
@@ -184,7 +183,12 @@ def build_style_summary(
             pct = ipct if pct is None else 0.5 * pct + 0.5 * ipct
             heat = iscore if heat is None else 0.6 * heat + 0.4 * iscore
 
-        tag, tag_class = _tag_for(flow_quality, pct, net, amount)
+        flow_amount = (
+            sum(float(s.get("amount") or 0.0) for s in order_members)
+            if order_members
+            else sum(float(s.get("amount") or 0.0) for s in aggregate_members)
+        )
+        tag, tag_class = _tag_for(flow_quality, pct, net, flow_amount or amount)
         members_text = " · ".join(
             [s.get("name", "") for s in members] + index_names
         ).strip(" · ")
