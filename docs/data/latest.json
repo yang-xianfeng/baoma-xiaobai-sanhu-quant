@@ -6,13 +6,13 @@
   "session_mode": "intraday_preview",
   "session_title": "盘中预览 · 未收盘定稿",
   "revision": "",
-  "updated_at": "2026-11-25T13:47:28.757587+08:00",
-  "updated_at_cst": "2026-11-25 13:47:28 CST",
+  "updated_at": "2026-11-25T13:50:21.784161+08:00",
+  "updated_at_cst": "2026-11-25 13:50:21 CST",
   "scores": {
-    "composite": 44.5,
-    "baoma": 30.2,
-    "novice": 51.8,
-    "retail": 49.8
+    "composite": 43.8,
+    "baoma": 30.3,
+    "novice": 49.9,
+    "retail": 49.3
   },
   "confidence": 87.3,
   "coverage": {
@@ -27,29 +27,29 @@
   },
   "signals": {
     "order_flow_imbalance": 99.7,
-    "advance_breadth": 19.1,
-    "liquidity_turnover": 13.1,
+    "advance_breadth": 16.8,
+    "liquidity_turnover": 14.1,
     "margin_leverage": 64.2,
-    "bias60": 13.8,
-    "turnover_heat": 15.6,
+    "bias60": 13.5,
+    "turnover_heat": 16.3,
     "margin_velocity": 3.3,
-    "lock_success": 71.8,
-    "microcap_premium": 29.6,
-    "limit_up_heat": 50.7
+    "lock_success": 70.5,
+    "microcap_premium": 26.1,
+    "limit_up_heat": 50.1
   },
   "raw_signals": {
     "rofi": {
-      "divergence_ratio_pct": 5.0841,
-      "retail_ratio_pct": 2.4236
+      "divergence_ratio_pct": 5.1695,
+      "retail_ratio_pct": 2.4556
     },
     "breadth": {
-      "advances": 1040,
-      "declines": 4391
+      "advances": 915,
+      "declines": 4533
     },
     "liquidity": {
-      "z": -2.216,
-      "turnover_rate": 1.1501,
-      "mean60": 1.6608
+      "z": -2.156,
+      "turnover_rate": 1.1655,
+      "mean60": 1.6611
     },
     "margin_leverage": {
       "margin_buy_ratio_pct": 8.526,
@@ -57,18 +57,18 @@
       "margin_date": "2026-11-24"
     },
     "bias60": {
-      "bias60_pct": -7.345,
-      "ma60": 3769.22
+      "bias60_pct": -7.434,
+      "ma60": 3769.17
     },
     "turnover_heat": {
       "liquidity": {
-        "z": -2.216,
-        "turnover_rate": 1.1501,
-        "mean60": 1.6608
+        "z": -2.156,
+        "turnover_rate": 1.1655,
+        "mean60": 1.6611
       },
       "tail": {
-        "tail_heat_10_pct": 2.42,
-        "p90_turnover": 4.315
+        "tail_heat_10_pct": 2.48,
+        "p90_turnover": 4.349
       }
     },
     "margin_velocity": {
@@ -76,15 +76,15 @@
       "base_date": "2026-11-17"
     },
     "lock_success": {
-      "broken_rate_pct": 28.21,
+      "broken_rate_pct": 29.49,
       "events": 78
     },
     "microcap_premium": {
-      "spread_pct": -1.184,
-      "z": -0.671
+      "spread_pct": -1.304,
+      "z": -1.011
     },
     "limit_heat": {
-      "limit_up_count": 56,
+      "limit_up_count": 55,
       "max_consecutive_board": 6
     }
   },
@@ -93,29 +93,29 @@
       "rofi": {
         "score": 99.7,
         "raw": {
-          "divergence_ratio_pct": 5.0841,
-          "retail_ratio_pct": 2.4236
+          "divergence_ratio_pct": 5.1695,
+          "retail_ratio_pct": 2.4556
         },
         "available": true,
         "estimated": false,
         "detail": "small-minus-main net flow / full-market turnover"
       },
       "breadth": {
-        "score": 19.1,
+        "score": 16.8,
         "raw": {
-          "advances": 1040,
-          "declines": 4391
+          "advances": 915,
+          "declines": 4533
         },
         "available": true,
         "estimated": false,
         "detail": "advance / (advance + decline)"
       },
       "liquidity": {
-        "score": 13.1,
+        "score": 14.1,
         "raw": {
-          "z": -2.216,
-          "turnover_rate": 1.1501,
-          "mean60": 1.6608
+          "z": -2.156,
+          "turnover_rate": 1.1655,
+          "mean60": 1.6611
         },
         "available": true,
         "estimated": false,
@@ -135,26 +135,26 @@
         "detail": "rolling percentile (60d); stale 1d"
       },
       "bias": {
-        "score": 13.8,
+        "score": 13.5,
         "raw": {
-          "bias60_pct": -7.345,
-          "ma60": 3769.22
+          "bias60_pct": -7.434,
+          "ma60": 3769.17
         },
         "available": true,
         "estimated": false,
         "detail": "BIAS60 with tanh(+-8pp) mapping"
       },
       "turnover_heat": {
-        "score": 15.6,
+        "score": 16.3,
         "raw": {
           "liquidity": {
-            "z": -2.216,
-            "turnover_rate": 1.1501,
-            "mean60": 1.6608
+            "z": -2.156,
+            "turnover_rate": 1.1655,
+            "mean60": 1.6611
           },
           "tail": {
-            "tail_heat_10_pct": 2.42,
-            "p90_turnover": 4.315
+            "tail_heat_10_pct": 2.48,
+            "p90_turnover": 4.349
           }
         },
         "available": true,
@@ -174,9 +174,9 @@
     },
     "novice": {
       "lock": {
-        "score": 71.8,
+        "score": 70.5,
         "raw": {
-          "broken_rate_pct": 28.21,
+          "broken_rate_pct": 29.49,
           "events": 78
         },
         "available": true,
@@ -184,19 +184,19 @@
         "detail": "100 - broken-board rate"
       },
       "spread": {
-        "score": 29.6,
+        "score": 26.1,
         "raw": {
-          "spread_pct": -1.184,
-          "z": -0.671
+          "spread_pct": -1.304,
+          "z": -1.011
         },
         "available": true,
         "estimated": false,
         "detail": "60% absolute + 40% rolling z (60d)"
       },
       "limit_heat": {
-        "score": 50.7,
+        "score": 50.1,
         "raw": {
-          "limit_up_count": 56,
+          "limit_up_count": 55,
           "max_consecutive_board": 6
         },
         "available": true,
@@ -232,33 +232,33 @@
     "confidence_warning": false
   },
   "microstructure": {
-    "total_turnover_billion": 9604.43,
-    "market_turnover_rate_pct": 1.15,
-    "liquidity_z": -2.216,
-    "advances": 1040,
-    "declines": 4391,
-    "unchanged": 146,
-    "advance_ratio_pct": 19.15,
-    "retail_tail_heat_pct": 2.42,
-    "main_net_flow_billion": -255.53,
-    "retail_net_flow_billion": 232.77,
-    "flow_divergence_billion": 488.3,
+    "total_turnover_billion": 9714.77,
+    "market_turnover_rate_pct": 1.165,
+    "liquidity_z": -2.156,
+    "advances": 915,
+    "declines": 4533,
+    "unchanged": 129,
+    "advance_ratio_pct": 16.8,
+    "retail_tail_heat_pct": 2.48,
+    "main_net_flow_billion": -263.65,
+    "retail_net_flow_billion": 238.56,
+    "flow_divergence_billion": 502.2,
     "flow_available": true,
     "margin_balance_billion": 21422.0,
     "margin_buy_billion": 1411.1,
     "margin_buy_ratio_pct": 8.526,
     "margin_date": "2026-11-24",
     "margin_stale_days": 1,
-    "limit_up_count": 56,
-    "broken_board_count": 22,
+    "limit_up_count": 55,
+    "broken_board_count": 23,
     "limit_down_count": 7,
-    "broken_rate_pct": 28.21,
+    "broken_rate_pct": 29.49,
     "max_consecutive_board": 6,
     "limit_pool_estimated": false,
-    "bias60_pct": -7.345,
-    "csi2000_pct": -2.63,
-    "csi300_pct": -1.45,
-    "microcap_spread_pct": -1.184,
+    "bias60_pct": -7.434,
+    "csi2000_pct": -2.81,
+    "csi300_pct": -1.51,
+    "microcap_spread_pct": -1.304,
     "active_stocks": 5577,
     "universe_coverage": 1.0
   },
@@ -266,72 +266,72 @@
     "000001": {
       "code": "000001",
       "name": "上证指数",
-      "close": 3492.38,
-      "change": -55.66,
-      "pct": -1.58,
-      "volume": 316708733.0,
-      "amount": 960442550000.0,
-      "total_market_cap_billion": 610204.75
+      "close": 3488.96,
+      "change": -59.46,
+      "pct": -1.67,
+      "volume": 320641507.0,
+      "amount": 971476600000.0,
+      "total_market_cap_billion": 609543.8
     },
     "399001": {
       "code": "399001",
       "name": "深证成指",
-      "close": 10181.46,
-      "change": -242.14,
-      "pct": -2.32,
-      "volume": 388974794.0,
-      "amount": 515509490000.0,
-      "total_market_cap_billion": 339945.92
+      "close": 10171.37,
+      "change": -252.23,
+      "pct": -2.42,
+      "volume": 393777559.0,
+      "amount": 521111440000.0,
+      "total_market_cap_billion": 339459.21
     },
     "399006": {
       "code": "399006",
       "name": "创业板指",
-      "close": 2207.27,
-      "change": -71.72,
-      "pct": -3.15,
-      "volume": 111100894.0,
-      "amount": 254144150000.0,
-      "total_market_cap_billion": 131766.37
+      "close": 2206.59,
+      "change": -72.4,
+      "pct": -3.18,
+      "volume": 112443690.0,
+      "amount": 256746060000.0,
+      "total_market_cap_billion": 131583.69
     },
     "000300": {
       "code": "000300",
       "name": "沪深300",
-      "close": 3906.4,
-      "change": -57.23,
-      "pct": -1.45,
-      "volume": 112152396.0,
-      "amount": 270397890000.0,
-      "total_market_cap_billion": 501156.73
+      "close": 3904.02,
+      "change": -59.37,
+      "pct": -1.51,
+      "volume": 113499645.0,
+      "amount": 273365330000.0,
+      "total_market_cap_billion": 500899.29
     },
     "399303": {
       "code": "399303",
       "name": "国证2000",
-      "close": 7478.22,
-      "change": -198.78,
-      "pct": -2.63,
-      "volume": 222982086.0,
-      "amount": 280046740000.0,
-      "total_market_cap_billion": 144905.96
+      "close": 7464.39,
+      "change": -214.87,
+      "pct": -2.81,
+      "volume": 225914207.0,
+      "amount": 283216840000.0,
+      "total_market_cap_billion": 144609.72
     },
     "000688": {
       "code": "000688",
       "name": "科创50",
-      "close": 1209.67,
-      "change": -40.42,
-      "pct": -3.23,
-      "volume": 6410244.0,
-      "amount": 58159410000.0,
-      "total_market_cap_billion": 44040.69
+      "close": 1208.3,
+      "change": -41.79,
+      "pct": -3.34,
+      "volume": 6472580.0,
+      "amount": 58656770000.0,
+      "total_market_cap_billion": 43996.93
     },
     "399106": {
       "code": "399106",
       "name": "深证综指",
-      "close": 1922.02,
-      "change": -42.86,
-      "pct": -2.21,
-      "volume": 389026313.0,
-      "amount": 515572870000.0,
-      "total_market_cap_billion": 339945.92
+      "close": 1919.46,
+      "change": -45.66,
+      "pct": -2.34,
+      "volume": 393881405.0,
+      "amount": 521229730000.0,
+      "total_market_cap_billion": 339459.21
     }
   },
   "breadth_source": "live_cross_section",
@@ -711,24 +711,24 @@
       "available": true,
       "provider_board": "建筑装饰和其他建",
       "match_keyword": "建筑装饰和其他建",
-      "pct": -0.541,
-      "turnover": 229.443,
-      "amount": 2240035967.24,
+      "pct": -0.568,
+      "turnover": 228.057,
+      "amount": 2225425668.24,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": 97246996.3,
+      "net_inflow": 94486217.3,
       "flow_quality": "aggregate",
       "leader_name": "全筑股份",
       "leader_code": "sh603030",
       "source": "Sina",
-      "sector_heat": 60.3,
+      "sector_heat": 58.8,
       "retail_sentiment": 68.3,
-      "flow_intensity_pct": 4.341,
+      "flow_intensity_pct": 4.246,
       "tag": "中性整理蓄势",
       "tag_class": "tag-neutral",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": 0.97
+      "net_inflow_billion": 0.94
     },
     {
       "id": "media_gaming",
@@ -775,24 +775,24 @@
       "available": true,
       "provider_board": "酒、饮料和精制茶",
       "match_keyword": "酒、饮料和精制茶",
-      "pct": 0.454,
-      "turnover": 35.524,
-      "amount": 9471027035.57,
+      "pct": 0.612,
+      "turnover": 35.114,
+      "amount": 9380930258.619999,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": 526123498.61,
+      "net_inflow": 553371284.14,
       "flow_quality": "aggregate",
       "leader_name": "田野股份",
       "leader_code": "bj920023",
       "source": "Sina",
       "sector_heat": 51.8,
       "retail_sentiment": 78.3,
-      "flow_intensity_pct": 5.555,
+      "flow_intensity_pct": 5.899,
       "tag": "资金回流做多",
       "tag_class": "tag-bull",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": 5.26
+      "net_inflow_billion": 5.53
     },
     {
       "id": "gold_precious_metals",
@@ -817,7 +817,7 @@
       "leader_name": "赤峰黄金",
       "leader_code": "sh600988",
       "source": "Sina",
-      "sector_heat": 43.3,
+      "sector_heat": 44.8,
       "retail_sentiment": 58.3,
       "flow_intensity_pct": 2.825,
       "tag": "中性整理蓄势",
@@ -839,24 +839,24 @@
       "available": true,
       "provider_board": "互联网和相关服务",
       "match_keyword": "互联网和相关服务",
-      "pct": -2.038,
-      "turnover": 234.15,
-      "amount": 13909387358.91,
+      "pct": -2.04,
+      "turnover": 232.218,
+      "amount": 13793587556.119999,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -633838442.99,
+      "net_inflow": -622429346.02,
       "flow_quality": "aggregate",
       "leader_name": "值得买",
       "leader_code": "sz300785",
       "source": "Sina",
       "sector_heat": 43.0,
       "retail_sentiment": 25.0,
-      "flow_intensity_pct": -4.557,
+      "flow_intensity_pct": -4.512,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -6.34
+      "net_inflow_billion": -6.22
     },
     {
       "id": "power_utilities",
@@ -881,46 +881,14 @@
       "leader_name": "三峡水利",
       "leader_code": "sh600116",
       "source": "Sina",
-      "sector_heat": 41.5,
-      "retail_sentiment": 51.7,
+      "sector_heat": 40.5,
+      "retail_sentiment": 48.3,
       "flow_intensity_pct": 0.813,
       "tag": "中性整理蓄势",
       "tag_class": "tag-neutral",
       "main_net_billion": null,
       "retail_net_billion": null,
       "net_inflow_billion": 0.23
-    },
-    {
-      "id": "semiconductor_equipment",
-      "name": "半导体设备与材料",
-      "category": "科技与数字经济",
-      "description": "晶圆制造前道刻蚀、薄膜沉积、清洗设备与国产替代半导体材料。",
-      "typical_companies": [
-        "北方华创",
-        "中微公司",
-        "拓荆科技"
-      ],
-      "available": true,
-      "provider_board": "仪器仪表制造业",
-      "match_keyword": "仪器仪表制造业",
-      "pct": -3.107,
-      "turnover": 273.532,
-      "amount": 11267803333.11,
-      "main_net": null,
-      "retail_net": null,
-      "net_inflow": -308529057.33,
-      "flow_quality": "aggregate",
-      "leader_name": "*ST益通",
-      "leader_code": "sz300430",
-      "source": "Sina",
-      "sector_heat": 38.2,
-      "retail_sentiment": 38.3,
-      "flow_intensity_pct": -2.738,
-      "tag": "资金流出承压",
-      "tag_class": "tag-bear",
-      "main_net_billion": null,
-      "retail_net_billion": null,
-      "net_inflow_billion": -3.09
     },
     {
       "id": "banking",
@@ -935,24 +903,56 @@
       "available": true,
       "provider_board": "货币金融服务",
       "match_keyword": "货币金融服务",
-      "pct": -0.115,
-      "turnover": 22.799,
-      "amount": 26591904196.65,
+      "pct": -0.018,
+      "turnover": 22.475,
+      "amount": 26233296535.15,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": 200559744.35,
+      "net_inflow": 324754016.45,
       "flow_quality": "aggregate",
-      "leader_name": "郑州银行",
-      "leader_code": "sz002936",
+      "leader_name": "兰州银行",
+      "leader_code": "sz001227",
       "source": "Sina",
-      "sector_heat": 38.2,
-      "retail_sentiment": 48.3,
-      "flow_intensity_pct": 0.754,
+      "sector_heat": 39.2,
+      "retail_sentiment": 51.7,
+      "flow_intensity_pct": 1.238,
       "tag": "中性整理蓄势",
       "tag_class": "tag-neutral",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": 2.01
+      "net_inflow_billion": 3.25
+    },
+    {
+      "id": "semiconductor_equipment",
+      "name": "半导体设备与材料",
+      "category": "科技与数字经济",
+      "description": "晶圆制造前道刻蚀、薄膜沉积、清洗设备与国产替代半导体材料。",
+      "typical_companies": [
+        "北方华创",
+        "中微公司",
+        "拓荆科技"
+      ],
+      "available": true,
+      "provider_board": "仪器仪表制造业",
+      "match_keyword": "仪器仪表制造业",
+      "pct": -3.173,
+      "turnover": 271.654,
+      "amount": 11184588732.87,
+      "main_net": null,
+      "retail_net": null,
+      "net_inflow": -309923239.17,
+      "flow_quality": "aggregate",
+      "leader_name": "*ST益通",
+      "leader_code": "sz300430",
+      "source": "Sina",
+      "sector_heat": 38.2,
+      "retail_sentiment": 38.3,
+      "flow_intensity_pct": -2.771,
+      "tag": "资金流出承压",
+      "tag_class": "tag-bear",
+      "main_net_billion": null,
+      "retail_net_billion": null,
+      "net_inflow_billion": -3.1
     },
     {
       "id": "metals_rare_earth",
@@ -967,24 +967,24 @@
       "available": true,
       "provider_board": "有色金属冶炼和压",
       "match_keyword": "有色金属冶炼和压",
-      "pct": -2.236,
-      "turnover": 139.108,
-      "amount": 22016543558.18,
+      "pct": -2.227,
+      "turnover": 137.654,
+      "amount": 21783144531.37,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -668818156.2,
+      "net_inflow": -635825178.93,
       "flow_quality": "aggregate",
       "leader_name": "电工合金",
       "leader_code": "sz300697",
       "source": "Sina",
       "sector_heat": 36.3,
       "retail_sentiment": 35.0,
-      "flow_intensity_pct": -3.038,
+      "flow_intensity_pct": -2.919,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -6.69
+      "net_inflow_billion": -6.36
     },
     {
       "id": "chip_design",
@@ -999,24 +999,24 @@
       "available": true,
       "provider_board": "计算机、通信和其",
       "match_keyword": "计算机、通信和其",
-      "pct": -3.2,
-      "turnover": 222.847,
-      "amount": 246717709361.57,
+      "pct": -3.224,
+      "turnover": 221.128,
+      "amount": 244723222511.91,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -2876368680.91,
+      "net_inflow": -2949263582.81,
       "flow_quality": "aggregate",
       "leader_name": "*ST天喻",
       "leader_code": "sz300205",
       "source": "Sina",
-      "sector_heat": 34.5,
+      "sector_heat": 33.8,
       "retail_sentiment": 45.0,
-      "flow_intensity_pct": -1.166,
+      "flow_intensity_pct": -1.205,
       "tag": "中性整理蓄势",
       "tag_class": "tag-neutral",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -28.76
+      "net_inflow_billion": -29.49
     },
     {
       "id": "ev_vehicles",
@@ -1063,24 +1063,24 @@
       "available": true,
       "provider_board": "铁路、船舶、航空",
       "match_keyword": "铁路、船舶、航空",
-      "pct": -1.043,
-      "turnover": 66.917,
-      "amount": 9205622609.674,
+      "pct": -0.994,
+      "turnover": 66.282,
+      "amount": 9123333278.164,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -317768052.846,
+      "net_inflow": -304885391.236,
       "flow_quality": "aggregate",
       "leader_name": "国瑞科技",
       "leader_code": "sz300600",
       "source": "Sina",
       "sector_heat": 30.5,
       "retail_sentiment": 31.7,
-      "flow_intensity_pct": -3.452,
+      "flow_intensity_pct": -3.342,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -3.18
+      "net_inflow_billion": -3.05
     },
     {
       "id": "hog_farming",
@@ -1095,24 +1095,24 @@
       "available": true,
       "provider_board": "畜牧业",
       "match_keyword": "畜牧业",
-      "pct": -1.785,
-      "turnover": 97.07,
-      "amount": 3422600211.1800003,
+      "pct": -1.803,
+      "turnover": 96.563,
+      "amount": 3403063474.8500004,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -198968665.74,
+      "net_inflow": -196704994.05,
       "flow_quality": "aggregate",
       "leader_name": "华英农业",
       "leader_code": "sz002321",
       "source": "Sina",
       "sector_heat": 30.0,
       "retail_sentiment": 18.3,
-      "flow_intensity_pct": -5.813,
+      "flow_intensity_pct": -5.78,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -1.99
+      "net_inflow_billion": -1.97
     },
     {
       "id": "telecom_equipment",
@@ -1127,24 +1127,24 @@
       "available": true,
       "provider_board": "电信、广播电视和",
       "match_keyword": "电信、广播电视和",
-      "pct": -0.172,
-      "turnover": 35.768,
-      "amount": 3384005681.44,
+      "pct": -0.144,
+      "turnover": 35.294,
+      "amount": 3339323146.44,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -209952502.46,
+      "net_inflow": -194758183.46,
       "flow_quality": "aggregate",
       "leader_name": "中国电信",
       "leader_code": "sh601728",
       "source": "Sina",
       "sector_heat": 29.2,
       "retail_sentiment": 15.0,
-      "flow_intensity_pct": -6.204,
+      "flow_intensity_pct": -5.832,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -2.1
+      "net_inflow_billion": -1.95
     },
     {
       "id": "photovoltaic",
@@ -1169,7 +1169,7 @@
       "leader_name": "*ST亿晶",
       "leader_code": "sh600537",
       "source": "Sina",
-      "sector_heat": 22.7,
+      "sector_heat": 23.4,
       "retail_sentiment": 21.7,
       "flow_intensity_pct": -5.139,
       "tag": "资金流出承压",
@@ -1191,24 +1191,24 @@
       "available": true,
       "provider_board": "电气机械和器材制",
       "match_keyword": "电气机械和器材制",
-      "pct": -3.094,
-      "turnover": 117.243,
-      "amount": 58299019764.78,
+      "pct": -3.019,
+      "turnover": 115.511,
+      "amount": 57494914513.38,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -3970742920.9,
+      "net_inflow": -3815680806.96,
       "flow_quality": "aggregate",
       "leader_name": "九阳股份",
       "leader_code": "sz002242",
       "source": "Sina",
       "sector_heat": 20.0,
       "retail_sentiment": 11.7,
-      "flow_intensity_pct": -6.811,
+      "flow_intensity_pct": -6.637,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
       "retail_net_billion": null,
-      "net_inflow_billion": -39.71
+      "net_inflow_billion": -38.16
     },
     {
       "id": "lithium_battery",
@@ -1255,19 +1255,19 @@
       "available": true,
       "provider_board": "机动车、电子产品",
       "match_keyword": "机动车、电子产品",
-      "pct": -2.66,
-      "turnover": 95.581,
-      "amount": 26925136.75,
+      "pct": -2.868,
+      "turnover": 95.04,
+      "amount": 26714366.75,
       "main_net": null,
       "retail_net": null,
-      "net_inflow": -4230136.75,
+      "net_inflow": -4440906.75,
       "flow_quality": "aggregate",
       "leader_name": "百邦科技",
       "leader_code": "sz300736",
       "source": "Sina",
       "sector_heat": 16.7,
       "retail_sentiment": 1.7,
-      "flow_intensity_pct": -15.711,
+      "flow_intensity_pct": -16.624,
       "tag": "资金流出承压",
       "tag_class": "tag-bear",
       "main_net_billion": null,
@@ -1372,119 +1372,119 @@
   "raw_inputs": {
     "overview": {
       "date": "2026-11-25",
-      "total_turnover": 960442550000.0,
-      "market_turnover_rate": 1.1501,
-      "total_advances": 1040,
-      "total_declines": 4391,
-      "total_unchanged": 146,
-      "advance_ratio": 19.15,
+      "total_turnover": 971476600000.0,
+      "market_turnover_rate": 1.1655,
+      "total_advances": 915,
+      "total_declines": 4533,
+      "total_unchanged": 129,
+      "advance_ratio": 16.8,
       "indices": {
         "000001": {
           "code": "000001",
           "name": "上证指数",
-          "close": 3492.38,
-          "change": -55.66,
-          "pct": -1.58,
-          "volume": 316708733.0,
-          "amount": 960442550000.0,
-          "total_market_cap_billion": 610204.75
+          "close": 3488.96,
+          "change": -59.46,
+          "pct": -1.67,
+          "volume": 320641507.0,
+          "amount": 971476600000.0,
+          "total_market_cap_billion": 609543.8
         },
         "399001": {
           "code": "399001",
           "name": "深证成指",
-          "close": 10181.46,
-          "change": -242.14,
-          "pct": -2.32,
-          "volume": 388974794.0,
-          "amount": 515509490000.0,
-          "total_market_cap_billion": 339945.92
+          "close": 10171.37,
+          "change": -252.23,
+          "pct": -2.42,
+          "volume": 393777559.0,
+          "amount": 521111440000.0,
+          "total_market_cap_billion": 339459.21
         },
         "399006": {
           "code": "399006",
           "name": "创业板指",
-          "close": 2207.27,
-          "change": -71.72,
-          "pct": -3.15,
-          "volume": 111100894.0,
-          "amount": 254144150000.0,
-          "total_market_cap_billion": 131766.37
+          "close": 2206.59,
+          "change": -72.4,
+          "pct": -3.18,
+          "volume": 112443690.0,
+          "amount": 256746060000.0,
+          "total_market_cap_billion": 131583.69
         },
         "000300": {
           "code": "000300",
           "name": "沪深300",
-          "close": 3906.4,
-          "change": -57.23,
-          "pct": -1.45,
-          "volume": 112152396.0,
-          "amount": 270397890000.0,
-          "total_market_cap_billion": 501156.73
+          "close": 3904.02,
+          "change": -59.37,
+          "pct": -1.51,
+          "volume": 113499645.0,
+          "amount": 273365330000.0,
+          "total_market_cap_billion": 500899.29
         },
         "399303": {
           "code": "399303",
           "name": "国证2000",
-          "close": 7478.22,
-          "change": -198.78,
-          "pct": -2.63,
-          "volume": 222982086.0,
-          "amount": 280046740000.0,
-          "total_market_cap_billion": 144905.96
+          "close": 7464.39,
+          "change": -214.87,
+          "pct": -2.81,
+          "volume": 225914207.0,
+          "amount": 283216840000.0,
+          "total_market_cap_billion": 144609.72
         },
         "000688": {
           "code": "000688",
           "name": "科创50",
-          "close": 1209.67,
-          "change": -40.42,
-          "pct": -3.23,
-          "volume": 6410244.0,
-          "amount": 58159410000.0,
-          "total_market_cap_billion": 44040.69
+          "close": 1208.3,
+          "change": -41.79,
+          "pct": -3.34,
+          "volume": 6472580.0,
+          "amount": 58656770000.0,
+          "total_market_cap_billion": 43996.93
         },
         "399106": {
           "code": "399106",
           "name": "深证综指",
-          "close": 1922.02,
-          "change": -42.86,
-          "pct": -2.21,
-          "volume": 389026313.0,
-          "amount": 515572870000.0,
-          "total_market_cap_billion": 339945.92
+          "close": 1919.46,
+          "change": -45.66,
+          "pct": -2.34,
+          "volume": 393881405.0,
+          "amount": 521229730000.0,
+          "total_market_cap_billion": 339459.21
         }
       },
       "universe": {
         "available": true,
         "active_count": 5577,
-        "advances": 1040,
-        "declines": 4391,
-        "unchanged": 146,
-        "advance_ratio": 19.15,
-        "total_amount": 966676171021.0,
-        "median_change": -1.786,
-        "cap_weighted_change": -1.586,
-        "median_turnover": 1.195,
-        "p90_turnover": 4.315,
-        "tail_heat_10": 2.42,
-        "tail_heat_15": 1.17,
-        "microcap_spread": -0.079,
-        "limit_up_est": 73,
-        "broken_est": 62,
+        "advances": 915,
+        "declines": 4533,
+        "unchanged": 129,
+        "advance_ratio": 16.8,
+        "total_amount": 977768516882.0,
+        "median_change": -1.993,
+        "cap_weighted_change": -1.685,
+        "median_turnover": 1.214,
+        "p90_turnover": 4.349,
+        "tail_heat_10": 2.48,
+        "tail_heat_15": 1.2,
+        "microcap_spread": -0.166,
+        "limit_up_est": 71,
+        "broken_est": 64,
         "limit_down_est": 9,
         "coverage": 1.0,
         "breadth_valid": true
       },
       "breadth_source": "live_cross_section",
-      "csi2000_pct": -2.633,
-      "csi300_pct": -1.449,
-      "microcap_spread": -1.184,
+      "csi2000_pct": -2.813,
+      "csi300_pct": -1.509,
+      "microcap_spread": -1.304,
       "session": "intraday_preview"
     },
     "flow": {
       "date": "2026-11-25",
-      "main_net": -25552758016.0,
-      "small_net": 23277035520.0,
-      "mid_net": 2276352000.0,
-      "super_net": -14363238400.0,
-      "large_net": -11189519616.0,
-      "divergence": 48829793536.0
+      "main_net": -26364699904.0,
+      "small_net": 23855788032.0,
+      "mid_net": 2514530304.0,
+      "super_net": -14827225088.0,
+      "large_net": -11537474816.0,
+      "divergence": 50220487936.0
     },
     "margin": {
       "date": "2026-11-24",
@@ -1500,10 +1500,10 @@
       "available": true,
       "estimated": false,
       "date": "2026-11-25",
-      "limit_up_count": 56,
-      "broken_board_count": 22,
+      "limit_up_count": 55,
+      "broken_board_count": 23,
       "limit_down_count": 7,
-      "broken_rate": 28.21,
+      "broken_rate": 29.49,
       "max_consecutive_board": 6,
       "source": "Eastmoney push2ex"
     }
