@@ -1,4 +1,5 @@
 name: Daily Quant Sentiment Pipeline
+# Deploy retry: Pages CDN can briefly reject the first deployment after enablement.
 
 on:
   schedule:
