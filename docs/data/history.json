@@ -650,13 +650,13 @@
   },
   {
     "date": "2026-11-25",
-    "composite": 49.2,
-    "baoma": 39.0,
-    "novice": 63.8,
-    "retail": 46.0,
-    "close": 3519.21,
-    "change_pct": -0.82,
-    "turnover_rate": 0.42,
-    "amount_billion": 731654.51
+    "composite": 47.9,
+    "baoma": 38.7,
+    "novice": 62.5,
+    "retail": 43.9,
+    "close": 3510.11,
+    "change_pct": -1.08,
+    "turnover_rate": 0.45,
+    "amount_billion": 793847.37
   }
 ]
