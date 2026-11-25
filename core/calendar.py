@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta, timezone
-from typing import Sequence, Union
+from typing import Sequence, Tuple, Union
 
 DateLike = Union[date, datetime, str]
 
@@ -98,6 +98,55 @@ def get_previous_trading_day(as_of: DateLike) -> date:
     while not is_trading_day(cur):
         cur -= timedelta(days=1)
     return cur
+
+def resolve_session(now: datetime | None = None, mode: str = "auto") -> Tuple[date, str]:
+    """Resolve (trade_date, session_mode) for a pipeline run.
+
+    A-share sessions:
+      - 09:30-11:30 / 13:00-15:00 trading; 15:00 close.
+      - A daily bar is considered finalized after 15:05 CST.
+
+    Modes:
+      - auto    : after 15:05 -> today/close; before 09:30 -> previous/pre_market;
+                  otherwise today/intraday_preview.
+      - close   : forces the close-settlement path (today if after 15:05,
+                  otherwise a provisional intraday preview).
+      - morning : before 09:30 -> previous/pre_market_briefing (the morning
+                  report always describes the last finalized close); after
+                  15:05 -> today/close; otherwise today/intraday_preview.
+
+    Weekends and holidays always resolve to the latest completed trading day.
+    """
+    now = now or get_cst_now()
+    today = now.date()
+    minute = now.hour * 60 + now.minute
+
+    if not is_trading_day(today):
+        return get_latest_trading_day(today), "holiday_review"
+
+    if mode == "close":
+        if minute >= 15 * 60 + 5:
+            return today, "close"
+        return today, "intraday_preview"
+
+    if mode == "morning":
+        # The morning job always describes the last completed close, even if
+        # GitHub schedules it late (runners can be delayed by many minutes).
+        if minute >= 15 * 60 + 5:
+            return today, "close"
+        return get_previous_trading_day(today), "pre_market_briefing"
+
+    # auto
+    if minute >= 15 * 60 + 5:
+        return today, "close"
+    if minute < 9 * 60 + 30:
+        return get_previous_trading_day(today), "pre_market_briefing"
+    return today, "intraday_preview"
+
+
+def get_effective_trading_day() -> Tuple[date, str]:
+    """Backward-compatible wrapper around resolve_session."""
+    return resolve_session(mode="auto")
 
 def get_recent_trading_days(count: int, end_date: DateLike | None = None) -> list[date]:
     """Get `count` recent trading days up to `end_date`, newest first."""

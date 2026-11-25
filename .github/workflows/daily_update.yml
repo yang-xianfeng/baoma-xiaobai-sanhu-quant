@@ -2,8 +2,12 @@ name: Daily Quant Sentiment Pipeline
 
 on:
   schedule:
-    # 17:30 Beijing Time (CST = UTC+8), Monday through Friday -> 09:30 UTC
-    - cron: '30 9 * * 1-5'
+    # 08:30 Beijing (CST = UTC+8), Mon-Fri -> 00:30 UTC
+    # Pre-market briefing: reuse the last finalized close + settled margin.
+    - cron: '30 0 * * 1-5'
+    # 15:30 Beijing, Mon-Fri -> 07:30 UTC
+    # Close settlement: full 5,500-stock cross-section, final daily point.
+    - cron: '30 7 * * 1-5'
   workflow_dispatch:
   push:
     branches:
@@ -25,6 +29,7 @@ concurrency:
 jobs:
   update-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -38,20 +43,33 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run Quantitative Pipeline
+      - name: Run offline unit tests
         env:
           PYTHONUTF8: "1"
+        run: python -m unittest discover -s tests -v
+
+      - name: Run quantitative pipeline
+        env:
+          PYTHONUTF8: "1"
+          TZ: Asia/Shanghai
         run: |
-          python run_pipeline.py
+          MODE="auto"
+          if [ "${{ github.event.schedule }}" = "30 0 * * 1-5" ]; then MODE="morning"; fi
+          if [ "${{ github.event.schedule }}" = "30 7 * * 1-5" ]; then MODE="close"; fi
+          echo "Pipeline mode: ${MODE}"
+          python run_pipeline.py --mode "${MODE}"
 
       - name: Commit updated quant data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "auto: daily quant index update [skip ci]"
+          commit_message: "auto: quant 2.1 data update [skip ci]"
           file_pattern: "docs/data/* docs/data.js"
+          skip_dirty_check: false
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

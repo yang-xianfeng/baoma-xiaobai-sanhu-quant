@@ -19,13 +19,14 @@
           A股散户情绪与市场博弈量化指数
           <span class="logo-badge">QUANT 2.0</span>
         </h1>
-        <p>基于微观订单流、两融杠杆、市场广度与打板炸板率的多因子行为量化系统</p>
+        <p>基于全市场横截面、微观订单流、两融杠杆与打板炸板率的多因子行为量化系统 · 每交易日 08:30 盘前晨报 / 15:30 收盘定稿</p>
       </div>
       <div class="header-meta">
         <div class="meta-badge" id="tradingDayBadge">
           <span class="pulse-dot"></span>
           <span id="marketDateText">加载中...</span>
         </div>
+        <div class="meta-badge" id="confidenceBadge" title="因子覆盖率与数据新鲜度综合评分">置信度 --</div>
         <button class="btn" id="whitepaperBtn">
           <span>📖</span> 方法学白皮书
         </button>
@@ -41,6 +42,7 @@
         <span id="statusSummary" style="font-size: 13px; font-weight: normal; color: var(--text-secondary); margin-left: 8px;"></span>
       </div>
       <div class="alert-action" id="statusAction">风控建议: 分析中</div>
+      <div class="alert-quality" id="dataQualityNote"></div>
     </div>
 
     <!-- Core 4 Gauges Grid -->
@@ -275,7 +277,7 @@
 
       <h3>3. 自动化更新与零成本运行机制</h3>
       <p>
-        依托 GitHub Actions 自动化 CI/CD，工作日北京时间 17:30 自动触发 Python 量化计算管线，耗时小于 20 秒，零云服务器成本，自动部署至 GitHub.io 静态页面。
+        依托 GitHub Actions 自动化 CI/CD：每交易日北京时间 08:30 生成盘前晨报（复用上一交易日收盘横截面并校准隔夜两融清算数据），15:30 收盘后抓取全市场 5,500+ 只股票横截面并定稿。全流程零服务器成本，自动提交并部署至 GitHub Pages。
       </p>
     </div>
   </div>
