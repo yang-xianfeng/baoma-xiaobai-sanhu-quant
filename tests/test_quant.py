@@ -40,6 +40,7 @@ from core.quant_engine import (
     z_score_to_scale,
 )
 from core.sector_catalog import CATEGORIES, SECTOR_DEFINITIONS
+from core.style_catalog import STYLE_BUCKETS, build_style_summary
 import run_pipeline
 
 
@@ -474,6 +475,52 @@ class TestSectorCatalog(unittest.TestCase):
         for s in SECTOR_DEFINITIONS:
             self.assertIn(s["category"], CATEGORIES)
             self.assertTrue(s["typical_companies"])
+
+
+class TestStyleCatalog(unittest.TestCase):
+    def test_style_buckets(self):
+        self.assertEqual(len(STYLE_BUCKETS), 8)
+        ids = {b["id"] for b in STYLE_BUCKETS}
+        for expected in ("big_finance", "star50", "star_semi", "chinext50", "ai_hardware", "advanced_mfg", "speculation", "consumer_health"):
+            self.assertIn(expected, ids)
+
+    def test_style_summary_handles_index_only_and_speculation(self):
+        sectors = [
+            {"id": "banking", "name": "银行", "available": True, "pct": 1.2, "amount": 1e10, "main_net": None, "net_inflow": 2e8, "flow_quality": "aggregate", "sector_heat": 60.0},
+            {"id": "securities_insurance", "name": "证券保险", "available": True, "pct": 0.8, "amount": 8e9, "main_net": None, "net_inflow": 1e8, "flow_quality": "aggregate", "sector_heat": 55.0},
+        ]
+        indices = {"000688": {"name": "科创50", "pct": -2.0}, "399673": {"name": "创业板50", "pct": -1.5}}
+        quant = {"novice": 62.0}
+        micro = {"microcap_spread_pct": -1.1, "broken_rate_pct": 42.0, "limit_up_count": 45}
+        out = build_style_summary(sectors, indices, quant, micro)
+        self.assertEqual(len(out), 8)
+        by_id = {x["id"]: x for x in out}
+        self.assertEqual(by_id["big_finance"]["flow_quality"], "aggregate")
+        self.assertAlmostEqual(by_id["big_finance"]["net_inflow_billion"], 3.0)
+        self.assertIsNone(by_id["star50"]["net_inflow_billion"])
+        self.assertEqual(by_id["star50"]["pct"], -2.0)
+        self.assertEqual(by_id["speculation"]["heat"], 62.0)
+        self.assertEqual(by_id["speculation"]["tag"], "炸板风险")
+
+    def test_history_120_has_warmup(self):
+        market = make_market(days=180)
+        margins = make_margins(market)
+        engine = QuantSentimentEngine()
+        overview = make_overview(market)
+        limit = {"available": True, "limit_up_count": 50, "broken_board_count": 8, "broken_rate": 13.79, "max_consecutive_board": 5}
+        quant = engine.evaluate_market_sentiment(
+            overview, {"small_net": 1e10, "main_net": -1e10, "divergence": 2e10}, margins[-1], limit,
+            market, margins, {r["date"]: 0.5 for r in market}, market[-1]["date"],
+        )
+        history = run_pipeline.build_history_series(
+            market, margins, [], {r["date"]: 0.5 for r in market},
+            engine, quant, market[-1]["date"], "finalized", days=120,
+        )
+        self.assertEqual(len(history), 120)
+        self.assertEqual(history[0]["source"], "backcast")
+        # The first point has 60 days of warmup, so BIAS60 / liquidity are available.
+        self.assertIsNotNone(history[0]["baoma"])
+        self.assertIsNotNone(history[0]["retail"])
 
 
 if __name__ == "__main__":

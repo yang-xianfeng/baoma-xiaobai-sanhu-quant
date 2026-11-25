@@ -351,6 +351,7 @@ class MarketFetcher:
             "s_sh000300",
             "s_sz399303",
             "s_sh000688",
+            "s_sz399673",
             "s_sz399106",
         ]
         url = "https://qt.gtimg.cn/q=" + ",".join(symbols)

@@ -37,6 +37,7 @@ from core.calendar import (
 from core.fetcher import MarketFetcher, align_by_date
 from core.quant_engine import QuantSentimentEngine, clamp, tanh_score
 from core.sector_catalog import CATEGORIES, SECTOR_DEFINITIONS
+from core.style_catalog import build_style_summary
 
 DOCS_DIR = PROJECT_ROOT / "docs"
 DATA_DIR = DOCS_DIR / "data"
@@ -343,6 +344,9 @@ def make_payload(
         "indices_overview": overview["indices"],
         "breadth_source": overview["breadth_source"],
         "categories": CATEGORIES,
+        "styles": build_style_summary(
+            scored_sectors, overview["indices"], quant, quant["microstructure"]
+        ),
         "sectors": scored_sectors,
         "sectors_stale": any(s.get("stale") for s in scored_sectors),
         "sectors_source_date": next(
@@ -378,9 +382,9 @@ def build_history_series(
     latest_quant: Dict[str, Any],
     target: str,
     data_status: str,
-    days: int = 60,
+    days: int = 120,
 ) -> List[Dict[str, Any]]:
-    """Build a 60-day chart series.
+    """Build a 120-day chart series.
 
     Dates before the latest finalized point are *backcasts*: they use real
     prices, turnover, margin and microcap spread where available, and are
@@ -388,7 +392,8 @@ def build_history_series(
     output.
     """
     rows = [r for r in market if r["date"] <= target]
-    subset = rows[-days:]
+    start_idx = max(0, len(rows) - days)
+    subset = rows[start_idx:]
     amount_by_date = {r["date"]: float(r["amount"]) for r in rows}
     margin_by_date = {str(r.get("date")): r for r in margins}
     flow_by_date = {str(r.get("date")): r for r in flow_history}
@@ -396,7 +401,7 @@ def build_history_series(
     points: List[Dict[str, Any]] = []
     for idx, row in enumerate(subset):
         d = row["date"]
-        klines = subset[: idx + 1]
+        klines = rows[: start_idx + idx + 1]
         amount = float(row.get("amount", 0.0) or 0.0)
         pct = float(row.get("change_pct", 0.0) or 0.0)
 
@@ -534,9 +539,9 @@ def run_full(
 
     print("  [3/5] 采集全市场微观结构数据...")
     universe = fetcher.fetch_universe()
-    market_hist = fetcher.fetch_market_history(limit=120, finalized_through=target.isoformat())
-    margins = fetcher.fetch_margin_data(page_size=90)
-    flows = fetcher.fetch_capital_flow(limit=90)
+    market_hist = fetcher.fetch_market_history(limit=180, finalized_through=target.isoformat())
+    margins = fetcher.fetch_margin_data(page_size=180)
+    flows = fetcher.fetch_capital_flow(limit=180)
     limit_pool = fetcher.fetch_limit_pool(target.isoformat(), fallback=universe)
 
     margin = align_by_date(margins, target.isoformat())
@@ -578,7 +583,7 @@ def run_full(
     )
 
     data_status = "finalized" if session in ("close", "holiday_review") else "provisional"
-    print("  [5/5] 构建 60 日滚动历史序列...")
+    print("  [5/5] 构建 120 日滚动历史序列...")
     history = build_history_series(
         market=market_hist.get("market", []),
         margins=margins,
@@ -588,7 +593,7 @@ def run_full(
         latest_quant=quant,
         target=target.isoformat(),
         data_status=data_status,
-        days=60,
+        days=120,
     )
 
     payload = make_payload(
@@ -630,8 +635,8 @@ def run_morning(
 ) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
     """Recompute the last close with settled margin data, no live quotes needed."""
     print("  [2/4] 盘前晨报：复用上一交易日收盘横截面，刷新两融清算数据...")
-    margins = fetcher.fetch_margin_data(page_size=90)
-    market_hist = fetcher.fetch_market_history(limit=120, finalized_through=target.isoformat())
+    margins = fetcher.fetch_margin_data(page_size=180)
+    market_hist = fetcher.fetch_market_history(limit=180, finalized_through=target.isoformat())
     margin = align_by_date(margins, target.isoformat())
 
     raw_inputs = cache.get("raw_inputs") or {}
@@ -672,7 +677,11 @@ def run_morning(
     scored_sectors = cache.get("sectors") or []
     existing_history = read_json(HISTORY_FILE, [])
     history = existing_history
-    if not history or not any(p.get("date") == target.isoformat() for p in history):
+    if (
+        not history
+        or len(history) < 100
+        or not any(p.get("date") == target.isoformat() for p in history)
+    ):
         history = build_history_series(
             market=market,
             margins=margins,
@@ -682,7 +691,7 @@ def run_morning(
             latest_quant=quant,
             target=target.isoformat(),
             data_status="finalized",
-            days=60,
+            days=120,
         )
     else:
         history = update_history_point(history, target.isoformat(), quant)
@@ -760,7 +769,7 @@ def print_result(payload: Dict[str, Any]) -> None:
     scores = payload["scores"]
     micro = payload["microstructure"]
     print("\n" + "=" * 64)
-    print(f"  ★ 量化指数计算结果 (交易日: {payload['market_date']}) ★")
+    print(f"  ★ 市场情绪与资金结构 (交易日: {payload['market_date']}) ★")
     print(f"  数据状态: [{payload['data_status']}] · {payload['session_title']}")
     print(f"  综合情绪指数 (Composite):    {scores['composite']:5.1f} / 100")
     print(f"  宝妈入场指数 (Baoma Bubble): {scores['baoma']:5.1f} / 100")
@@ -811,7 +820,7 @@ def run_pipeline(mode: str = "auto") -> Dict[str, Any]:
     target, session = resolve_session(now, mode=mode)
 
     print("=" * 64)
-    print("  A股散户情绪与市场博弈量化指数 · QUANT 2.1 管线")
+    print("  A股市场情绪与资金结构 · 盘前晨报 / 收盘定稿管线")
     print(f"  运行模式: {mode} | 北京时间: {now.strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"  目标交易日: {target.isoformat()} | 会话: {session}")
     print("=" * 64)
