@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A股散户情绪与市场博弈量化指数 · 宝妈·小白·散户指数 专业量化版</title>
+  <meta name="description" content="基于微观订单流、两融杠杆买入激进度、全市场换手偏离与打板套牢率的A股专业行为量化情绪指数系统。GitHub CI/CD每日自动更新。">
+  <link rel="stylesheet" href="style.css">
+  <!-- ECharts 5 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <h1>
+          A股散户情绪与市场博弈量化指数
+          <span class="logo-badge">QUANT 2.0</span>
+        </h1>
+        <p>基于微观订单流、两融杠杆、市场广度与打板炸板率的多因子行为量化系统</p>
+      </div>
+      <div class="header-meta">
+        <div class="meta-badge" id="tradingDayBadge">
+          <span class="pulse-dot"></span>
+          <span id="marketDateText">加载中...</span>
+        </div>
+        <button class="btn" id="whitepaperBtn">
+          <span>📖</span> 方法学白皮书
+        </button>
+        <button class="btn" id="themeBtn">🌙</button>
+      </div>
+    </header>
+
+    <!-- Strategy Risk Alert Banner -->
+    <div class="alert-banner" id="riskBanner">
+      <div class="alert-title">
+        <span>⚡ 实时量化状态：</span>
+        <span class="badge-status badge-info" id="statusTag">计算中...</span>
+        <span id="statusSummary" style="font-size: 13px; font-weight: normal; color: var(--text-secondary); margin-left: 8px;"></span>
+      </div>
+      <div class="alert-action" id="statusAction">风控建议: 分析中</div>
+    </div>
+
+    <!-- Core 4 Gauges Grid -->
+    <div class="gauges-grid">
+      <!-- Composite Index -->
+      <div class="gauge-card">
+        <div class="gauge-header">
+          <div class="gauge-title">全市场综合情绪指数</div>
+          <div class="gauge-tag">等权/风控加权</div>
+        </div>
+        <div class="gauge-center">
+          <div class="gauge-score score-gold" id="scoreComposite">--</div>
+          <svg class="dial-svg" viewBox="0 0 36 36">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.5" />
+            <path id="arcComposite" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f59e0b" stroke-width="3.5" stroke-dasharray="0, 100" />
+          </svg>
+        </div>
+        <div class="gauge-footer">
+          综合散户多空博弈、宝妈出圈杠杆与小白追涨套牢信号，0-100 标准化中枢 50。
+        </div>
+      </div>
+
+      <!-- Baoma Index -->
+      <div class="gauge-card">
+        <div class="gauge-header">
+          <div class="gauge-title">宝妈入场指数</div>
+          <div class="gauge-tag">出圈狂热/顶部风险</div>
+        </div>
+        <div class="gauge-center">
+          <div class="gauge-score score-rose" id="scoreBaoma">--</div>
+          <svg class="dial-svg" viewBox="0 0 36 36">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.5" />
+            <path id="arcBaoma" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f43f5e" stroke-width="3.5" stroke-dasharray="0, 100" />
+          </svg>
+        </div>
+        <div class="gauge-footer">
+          两融杠杆买入激进度、BIAS60 乖离率与投机尾部极端换手扩散度。高分提示出圈泡沫。
+        </div>
+      </div>
+
+      <!-- Novice Index -->
+      <div class="gauge-card">
+        <div class="gauge-header">
+          <div class="gauge-title">小白跟风指数</div>
+          <div class="gauge-tag">追板套牢/微盘投机</div>
+        </div>
+        <div class="gauge-center">
+          <div class="gauge-score score-cyan" id="scoreNovice">--</div>
+          <svg class="dial-svg" viewBox="0 0 36 36">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.5" />
+            <path id="arcNovice" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#06b6d4" stroke-width="3.5" stroke-dasharray="0, 100" />
+          </svg>
+        </div>
+        <div class="gauge-footer">
+          打板封板脆弱度、炸板率、国证2000小微盘相对沪深300投机溢价动量。
+        </div>
+      </div>
+
+      <!-- Retail Sentiment Index -->
+      <div class="gauge-card">
+        <div class="gauge-header">
+          <div class="gauge-title">散户情绪指数</div>
+          <div class="gauge-tag">散户买盘/微观博弈</div>
+        </div>
+        <div class="gauge-center">
+          <div class="gauge-score score-purple" id="scoreRetail">--</div>
+          <svg class="dial-svg" viewBox="0 0 36 36">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.5" />
+            <path id="arcRetail" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#8b5cf6" stroke-width="3.5" stroke-dasharray="0, 100" />
+          </svg>
+        </div>
+        <div class="gauge-footer">
+          微观资金小单净买入与主力大单流向剪刀差、全市场赚钱效应上涨家数占比。
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-section">
+      <div class="chart-header">
+        <div class="chart-title">
+          <h2>三大分指数与上证指数连续走势对照</h2>
+          <p>滚动 A 股真实交易日历史校准 · 双Y轴对比情绪过热与大盘牛熊拐点</p>
+        </div>
+        <div class="chart-controls">
+          <button class="time-btn" data-days="30">近30日</button>
+          <button class="time-btn active" data-days="60">近60日</button>
+          <button class="time-btn" data-days="120">近120日</button>
+        </div>
+      </div>
+      <div id="trendChart"></div>
+    </div>
+
+    <!-- Microstructure Metrics 4-Grid -->
+    <div class="metrics-grid">
+      <!-- Metric 1: Order Flow -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <span>📊</span> 微观资金流向博弈
+        </div>
+        <div class="metric-row">
+          <span>主力大单净流入</span>
+          <span class="metric-val" id="valMainFlow">--</span>
+        </div>
+        <div class="metric-row">
+          <span>散户小单净买入</span>
+          <span class="metric-val" id="valRetailFlow">--</span>
+        </div>
+        <div class="metric-row">
+          <span>多空剪刀差背离</span>
+          <span class="metric-val" id="valFlowDiv">--</span>
+        </div>
+      </div>
+
+      <!-- Metric 2: Margin Leverage -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <span>📈</span> 两融杠杆参与激进度
+        </div>
+        <div class="metric-row">
+          <span>全市场融资余额</span>
+          <span class="metric-val" id="valMarginBal">--</span>
+        </div>
+        <div class="metric-row">
+          <span>当日融资买入额</span>
+          <span class="metric-val" id="valMarginBuy">--</span>
+        </div>
+        <div class="metric-row">
+          <span>融资买入成交占比</span>
+          <span class="metric-val" id="valMarginRatio">--</span>
+        </div>
+      </div>
+
+      <!-- Metric 3: Limit-Up/Down & Broken -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <span>🎯</span> 短线打板与炸板率
+        </div>
+        <div class="metric-row">
+          <span>涨停 / 跌停家数</span>
+          <span class="metric-val" id="valZtDtCount">--</span>
+        </div>
+        <div class="metric-row">
+          <span>炸板家数</span>
+          <span class="metric-val" id="valZbCount">--</span>
+        </div>
+        <div class="metric-row">
+          <span>炸板率 / 最高连板</span>
+          <span class="metric-val" id="valZbRate">--</span>
+        </div>
+      </div>
+
+      <!-- Metric 4: Market Breadth & Turnover -->
+      <div class="metric-card">
+        <div class="metric-title">
+          <span>⚖️</span> 市场广度与均线偏离
+        </div>
+        <div class="metric-row">
+          <span>全市场两市总成交额</span>
+          <span class="metric-val" id="valTotalTurnover">--</span>
+        </div>
+        <div class="metric-row">
+          <span>上涨 / 下跌家数 (涨跌比)</span>
+          <span class="metric-val" id="valAdvDec">--</span>
+        </div>
+        <div class="metric-row">
+          <span>BIAS60 均线乖离率</span>
+          <span class="metric-val" id="valBias60">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 30 Sector Heatmap Matrix Section -->
+    <div class="sector-section">
+      <div class="sector-header">
+        <div>
+          <h2 style="font-size: 18px; font-weight: 700;">30 个核心细分行业/题材散户博弈矩阵</h2>
+          <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+            覆盖 8 大产业大类 · 实时监测主力净流入 vs 散户跟风买入，揭示板块多空分歧
+          </p>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="category-pills" id="categoryPills">
+        <button class="cat-pill active" data-cat="all">全部板块 (30)</button>
+      </div>
+
+      <!-- Sector Cards Grid -->
+      <div class="sector-grid" id="sectorGrid">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        A股散户情绪与市场博弈量化指数 · 开源量化研究项目 (MIT License) · 托管于 GitHub Pages
+      </p>
+      <p style="margin-top: 6px; font-size: 11px;">
+        数据源: 上交所/深交所官方行情、东方财富公开数据中心 OpenAPI、腾讯财经。本系统基于量化金融与行为金融学模型，仅供数据分析与学术参考，不构成任何投资建议。
+      </p>
+    </footer>
+  </div>
+
+  <!-- Whitepaper Modal -->
+  <div class="modal-backdrop" id="whitepaperModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalCloseBtn">&times;</button>
+      <h2>📖 A股散户情绪与市场博弈量化指数 · 方法学白皮书</h2>
+      
+      <h3>1. 为什么原版项目（20260806）停滞且失效？</h3>
+      <p>
+        原开源项目 <code>baoma-xiaobai-sanhu-zhishu</code> 存在严重的非专业工程与方法学缺陷：
+      </p>
+      <ul>
+        <li><strong>反量化教条主义</strong>：原作者自称“不使用量价、成交量、换手率”，仅靠爬取 4 个股吧论坛标题做关键词匹配。在真实量化金融中，脱离微观订单流与量价的行为学指标极易沦为机器人水军和水贴噪音。</li>
+        <li><strong>脆弱的 308 个网页同步抓取</strong>：每次运行向东财、新浪、同花顺、淘股吧发送 308 次同步爬虫，极易触发海外 CI/CD 容器 IP 封禁与反爬验证码，导致数据在 2026 年 8 月即全盘断流。</li>
+        <li><strong>缺少日常自动化 CI/CD</strong>：GitHub 仓库仅包含离线测试，无任何定时调度和自动部署脚本。</li>
+      </ul>
+
+      <h3>2. QUANT 2.0 机构级量化因子的重构设计</h3>
+      <p>
+        新版系统彻底摒弃脆弱的论坛文本爬虫，基于微观市场结构（Microstructure）与行为金融学经典理论（Baker & Wurgler 2006, Lee et al. 1991），重构四大核心指数：
+      </p>
+      <ul>
+        <li><strong>散户情绪指数 (Retail Sentiment Index, RSI)</strong>：权重组合 40% 散户小单净买入 vs 主力大单净流出剪刀差 (Order Flow Imbalance) + 35% 全市场赚钱效应涨跌比 + 25% 自由流通换手率 Z-score 偏离度。</li>
+        <li><strong>宝妈入场指数 (Out-of-Circle Bubble Euphoria Index)</strong>：精准刻画场外非专业群体跟风泡沫。组合 35% 两融杠杆买入激进度 (融资买入额占成交额比) + 30% 60日均线乖离率 (BIAS60) + 20% 极端换手尾部占比 + 15% 融资余额动量加速度。</li>
+        <li><strong>小白跟风博弈指数 (Novice Speculation & Chasing Index)</strong>：度量短线情绪化追涨与套牢风险。组合 40% 打板套牢与炸板率 (Broken Limit Rate) + 35% 国证2000小微盘相对沪深300的投机收益溢价 + 25% 涨停板连板情绪。</li>
+        <li><strong>综合情绪指数 (Composite Index)</strong>：三者加权合成，映射至 0 - 100 标准化区间，中枢为 50。</li>
+      </ul>
+
+      <h3>3. 自动化更新与零成本运行机制</h3>
+      <p>
+        依托 GitHub Actions 自动化 CI/CD，工作日北京时间 17:30 自动触发 Python 量化计算管线，耗时小于 20 秒，零云服务器成本，自动部署至 GitHub.io 静态页面。
+      </p>
+    </div>
+  </div>
+
+  <!-- Include data script first for instant local viewing -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

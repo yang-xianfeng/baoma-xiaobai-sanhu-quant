@@ -1,0 +1,63 @@
+name: Daily Quant Sentiment Pipeline
+
+on:
+  schedule:
+    # 17:30 Beijing Time (CST = UTC+8), Monday through Friday -> 09:30 UTC
+    - cron: '30 9 * * 1-5'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/data/**'
+      - 'docs/data.js'
+      - 'README.md'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Quantitative Pipeline
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          python run_pipeline.py
+
+      - name: Commit updated quant data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "auto: daily quant index update [skip ci]"
+          file_pattern: "docs/data/* docs/data.js"
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
