@@ -304,7 +304,11 @@ def _match_score(board_name: str, keywords: List[str]) -> Tuple[int, str]:
         if board_name == kw:
             score = 100 + len(kw)
         elif kw in board_name:
-            score = 50 + len(kw)
+            # Short generic keywords such as 电子 / 银行 / 证券 are extremely
+            # prone to false positives (e.g. 电子纸概念 for 半导体). They only
+            # count as weak hints and fall below the 30-point match threshold
+            # unless the exact board exists.
+            score = (50 + len(kw)) if len(kw) >= 3 else (20 + len(kw))
         elif board_name in kw:
             score = 30 + len(board_name)
         else:
@@ -801,6 +805,7 @@ class MarketFetcher:
     # -- sectors -------------------------------------------------------------
     def _fetch_eastmoney_boards(self) -> List[Dict[str, Any]]:
         boards: List[Dict[str, Any]] = []
+        seen = set()
         for fs, kind in (("m:90+t:2+f:!50", "industry"), ("m:90+t:3+f:!50", "concept")):
             url = (
                 "https://push2.eastmoney.com/api/qt/clist/get?"
@@ -808,7 +813,7 @@ class MarketFetcher:
                     {
                         "ut": EM_UT,
                         "pn": 1,
-                        "pz": 200,
+                        "pz": 500,
                         "po": 1,
                         "np": 1,
                         "fltt": 2,
@@ -819,12 +824,18 @@ class MarketFetcher:
                     }
                 )
             )
-            res = http_get_json(url, referer="https://quote.eastmoney.com/", timeout=12)
-            diff = (res or {}).get("data", {}).get("diff", []) if isinstance(res, dict) else []
+            diff = []
+            for attempt in range(2):
+                res = http_get_json(url, referer="https://quote.eastmoney.com/", timeout=12)
+                diff = (res or {}).get("data", {}).get("diff", []) if isinstance(res, dict) else []
+                if diff:
+                    break
+                time.sleep(0.4 * (attempt + 1))
             for b in diff or []:
                 name = str(b.get("f14", "")).strip()
-                if not name:
+                if not name or name in seen:
                     continue
+                seen.add(name)
                 boards.append(
                     {
                         "name": name,
@@ -841,6 +852,7 @@ class MarketFetcher:
                         "source": "Eastmoney",
                     }
                 )
+            time.sleep(0.25)
         return boards
 
     def _fetch_sina_boards(self) -> List[Dict[str, Any]]:
@@ -892,28 +904,36 @@ class MarketFetcher:
         return boards
 
     def fetch_sector_boards(self) -> Dict[str, Any]:
-        boards = self._fetch_eastmoney_boards()
-        source = "Eastmoney"
-        if not boards:
-            boards = self._fetch_sina_boards()
-            source = "Sina"
-            if len(boards) < 100:
-                # Partial Sina responses are common under rate limiting; one
-                # more pass usually recovers the missing concept/CSRC lists.
-                time.sleep(0.6)
-                retry = self._fetch_sina_boards()
-                if len(retry) > len(boards):
-                    boards = retry
+        east = self._fetch_eastmoney_boards()
+        boards = list(east)
+        source = "Eastmoney" if east else ""
+        sina: List[Dict[str, Any]] = []
+        if len(east) < 300:
+            # Eastmoney sometimes returns only one of the industry/concept
+            # lists. Supplement with Sina aggregate-flow boards so the
+            # 30-sector matrix stays complete; order-flow boards still win
+            # on equal keyword quality.
+            sina = self._fetch_sina_boards()
+            existing = {b["name"] for b in boards}
+            for b in sina:
+                if b["name"] not in existing:
+                    boards.append(b)
+                    existing.add(b["name"])
+            if sina:
+                source = "Eastmoney+Sina" if east else "Sina"
         if not boards:
             self._set_quality("sectors", "unavailable", "Eastmoney/Sina")
             return {"available": False, "boards": [], "source": ""}
-        status = "ok" if source == "Eastmoney" else "partial"
+        status = "ok" if len(east) >= 300 else "partial"
+        flow_quality = (
+            "order_flow" if east else (boards[0]["flow_quality"] if boards else "unavailable")
+        )
         self._set_quality(
             "sectors",
             status,
             source,
             get_cst_today().isoformat(),
-            f"{len(boards)} boards; flow={boards[0]['flow_quality']}",
+            f"{len(east)} EM + {len(sina)} Sina; flow={flow_quality}",
         )
         return {"available": True, "boards": boards, "source": source}
 
@@ -927,7 +947,19 @@ class MarketFetcher:
             best_name = ""
             for b in boards:
                 score, kw = _match_score(b["name"], s_def["board_keywords"])
-                if score > best_score and b["name"] not in used:
+                if b["name"] in used:
+                    continue
+                better = score > best_score
+                # On an exact keyword tie, prefer real order-flow data over
+                # Sina's aggregate net inflow.
+                if (
+                    score == best_score
+                    and best is not None
+                    and b.get("flow_quality") == "order_flow"
+                    and best.get("flow_quality") != "order_flow"
+                ):
+                    better = True
+                if better:
                     best, best_score, best_name = b, score, kw
             if best is None or best_score < 30:
                 matched.append(

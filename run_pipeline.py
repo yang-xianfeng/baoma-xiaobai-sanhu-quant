@@ -541,6 +541,9 @@ def run_full(
 
     margin = align_by_date(margins, target.isoformat())
     flow = next((r for r in flows if r["date"] == target.isoformat()), None)
+    if flow and fetcher.quality.get("capital_flow", {}).get("status") == "partial":
+        flow = dict(flow)
+        flow["estimated"] = True
 
     overview = build_overview(target, session, quotes, universe, market_hist, cache)
     print(
