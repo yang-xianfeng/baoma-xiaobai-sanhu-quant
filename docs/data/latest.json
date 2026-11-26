@@ -1,22 +1,22 @@
 {
   "schema_version": "2.1",
   "version": "2.1_quant",
-  "market_date": "2026-11-26",
-  "data_status": "finalized",
-  "session_mode": "close",
-  "session_title": "收盘结算版 · 全市场横截面定稿",
+  "market_date": "2026-11-27",
+  "data_status": "provisional",
+  "session_mode": "intraday_preview",
+  "session_title": "盘中预览 · 未收盘定稿",
   "revision": "",
-  "updated_at": "2026-11-26T16:44:59.706261+08:00",
-  "updated_at_cst": "2026-11-26 16:44:59 CST",
+  "updated_at": "2026-11-27T01:48:58.418825+08:00",
+  "updated_at_cst": "2026-11-27 01:48:58 CST",
   "scores": {
-    "composite": 42.0,
+    "composite": 37.6,
     "baoma": 14.3,
     "novice": 60.0,
-    "retail": 49.3
+    "retail": 38.2
   },
-  "confidence": 97.0,
+  "confidence": 72.9,
   "coverage": {
-    "retail": 1.0,
+    "retail": 0.6,
     "baoma": 1.0,
     "novice": 1.0
   },
@@ -26,25 +26,22 @@
     "novice": false
   },
   "signals": {
-    "order_flow_imbalance": 65.9,
-    "advance_breadth": 32.8,
+    "order_flow_imbalance": 50.0,
+    "advance_breadth": 32.7,
     "liquidity_turnover": 46.0,
     "margin_leverage": 5.8,
     "bias60": 13.1,
     "turnover_heat": 40.1,
     "margin_velocity": 1.9,
     "lock_success": 69.2,
-    "microcap_premium": 45.8,
+    "microcap_premium": 45.9,
     "limit_up_heat": 65.0
   },
   "raw_signals": {
-    "rofi": {
-      "divergence_ratio_pct": 0.4759,
-      "retail_ratio_pct": 0.5385
-    },
+    "rofi": null,
     "breadth": {
-      "advances": 1709,
-      "declines": 3501
+      "advances": 1766,
+      "declines": 3641
     },
     "liquidity": {
       "z": -0.242,
@@ -68,7 +65,7 @@
       },
       "tail": {
         "tail_heat_10_pct": 4.02,
-        "p90_turnover": 5.862
+        "p90_turnover": 5.883
       }
     },
     "margin_velocity": {
@@ -80,8 +77,8 @@
       "events": 94
     },
     "microcap_premium": {
-      "spread_pct": -0.223,
-      "z": -0.131
+      "spread_pct": -0.22,
+      "z": -0.124
     },
     "limit_heat": {
       "limit_up_count": 65,
@@ -91,20 +88,17 @@
   "factor_detail": {
     "retail": {
       "rofi": {
-        "score": 65.9,
-        "raw": {
-          "divergence_ratio_pct": 0.4759,
-          "retail_ratio_pct": 0.5385
-        },
-        "available": true,
+        "score": null,
+        "raw": null,
+        "available": false,
         "estimated": false,
-        "detail": "small-minus-main net flow / full-market turnover"
+        "detail": "order flow unavailable"
       },
       "breadth": {
-        "score": 32.8,
+        "score": 32.7,
         "raw": {
-          "advances": 1709,
-          "declines": 3501
+          "advances": 1766,
+          "declines": 3641
         },
         "available": true,
         "estimated": false,
@@ -154,7 +148,7 @@
           },
           "tail": {
             "tail_heat_10_pct": 4.02,
-            "p90_turnover": 5.862
+            "p90_turnover": 5.883
           }
         },
         "available": true,
@@ -184,10 +178,10 @@
         "detail": "100 - broken-board rate"
       },
       "spread": {
-        "score": 45.8,
+        "score": 45.9,
         "raw": {
-          "spread_pct": -0.223,
-          "z": -0.131
+          "spread_pct": -0.22,
+          "z": -0.124
         },
         "available": true,
         "estimated": false,
@@ -207,9 +201,8 @@
   },
   "weights_used": {
     "retail": {
-      "rofi": 0.4,
-      "breadth": 0.35,
-      "liquidity": 0.25
+      "breadth": 0.5833,
+      "liquidity": 0.4167
     },
     "baoma": {
       "margin": 0.35,
@@ -227,23 +220,23 @@
     "level": "fear",
     "tag": "情绪低迷 / 磨底震荡",
     "badge_class": "badge-info",
-    "summary": "成交与换手收缩，散户观望情绪占主导，市场赚钱效应偏弱，风险逐步释放，等待流动性拐点。",
-    "action": "耐心潜伏 · 跟踪企稳信号",
+    "summary": "成交与换手收缩，散户观望情绪占主导，市场赚钱效应偏弱，风险逐步释放，等待流动性拐点。（盘中预览，收盘后会自动定稿，请勿据此执行收盘策略。）",
+    "action": "预览模式 · 耐心潜伏 · 跟踪企稳信号",
     "confidence_warning": false
   },
   "microstructure": {
     "total_turnover_billion": 13173.77,
     "market_turnover_rate_pct": 1.614,
     "liquidity_z": -0.242,
-    "advances": 1709,
-    "declines": 3501,
-    "unchanged": 169,
-    "advance_ratio_pct": 32.8,
+    "advances": 1766,
+    "declines": 3641,
+    "unchanged": 172,
+    "advance_ratio_pct": 32.66,
     "retail_tail_heat_pct": 4.02,
-    "main_net_flow_billion": 8.25,
-    "retail_net_flow_billion": 70.94,
-    "flow_divergence_billion": 62.7,
-    "flow_available": true,
+    "main_net_flow_billion": null,
+    "retail_net_flow_billion": null,
+    "flow_divergence_billion": null,
+    "flow_available": false,
     "margin_balance_billion": 21213.86,
     "margin_buy_billion": 1038.1,
     "margin_buy_ratio_pct": 7.506,
@@ -258,9 +251,9 @@
     "bias60_pct": -7.571,
     "csi2000_pct": -0.16,
     "csi300_pct": 0.06,
-    "microcap_spread_pct": -0.223,
-    "active_stocks": 5379,
-    "universe_coverage": 0.964
+    "microcap_spread_pct": -0.22,
+    "active_stocks": 5579,
+    "universe_coverage": 1.0
   },
   "indices_overview": {
     "000001": {
@@ -270,7 +263,7 @@
       "change": 0.41,
       "pct": 0.01,
       "volume": 454062959.0,
-      "amount": 1317377170500.0,
+      "amount": 1317377170700.0,
       "total_market_cap_billion": 607324.1
     },
     "399001": {
@@ -1463,7 +1456,7 @@
     }
   ],
   "sectors_stale": false,
-  "sectors_source_date": "2026-11-26",
+  "sectors_source_date": "2026-11-27",
   "data_quality": {
     "sources": [
       {
@@ -1477,14 +1470,14 @@
         "name": "index_quotes",
         "status": "ok",
         "source": "Tencent",
-        "date": "2026-11-26",
+        "date": "2026-11-27",
         "detail": ""
       },
       {
         "name": "limit_pool",
         "status": "ok",
         "source": "Eastmoney push2ex",
-        "date": "2026-11-26",
+        "date": "2026-11-27",
         "detail": ""
       },
       {
@@ -1505,34 +1498,36 @@
         "name": "sectors",
         "status": "partial",
         "source": "Eastmoney+Sina",
-        "date": "2026-11-26",
+        "date": "2026-11-27",
         "detail": "200 EM + 383 Sina; flow=order_flow"
       },
       {
         "name": "universe",
-        "status": "partial",
+        "status": "ok",
         "source": "Sina",
-        "date": "2026-11-26",
-        "detail": "coverage=96.4%, failed_pages=2"
+        "date": "2026-11-27",
+        "detail": "5579 active stocks"
       }
     ],
-    "missing_factors": [],
+    "missing_factors": [
+      "retail.rofi"
+    ],
     "coverage": {
-      "retail": 1.0,
+      "retail": 0.6,
       "baoma": 1.0,
       "novice": 1.0
     },
-    "confidence": 97.0
+    "confidence": 72.9
   },
   "raw_inputs": {
     "overview": {
-      "date": "2026-11-26",
-      "total_turnover": 1317377170500.0,
+      "date": "2026-11-27",
+      "total_turnover": 1317377170700.0,
       "market_turnover_rate": 1.6141,
-      "total_advances": 1709,
-      "total_declines": 3501,
-      "total_unchanged": 169,
-      "advance_ratio": 32.8,
+      "total_advances": 1766,
+      "total_declines": 3641,
+      "total_unchanged": 172,
+      "advance_ratio": 32.66,
       "indices": {
         "000001": {
           "code": "000001",
@@ -1541,7 +1536,7 @@
           "change": 0.41,
           "pct": 0.01,
           "volume": 454062959.0,
-          "amount": 1317377170500.0,
+          "amount": 1317377170700.0,
           "total_market_cap_billion": 607324.1
         },
         "399001": {
@@ -1617,40 +1612,32 @@
       },
       "universe": {
         "available": true,
-        "active_count": 5379,
-        "advances": 1709,
-        "declines": 3501,
-        "unchanged": 169,
-        "advance_ratio": 32.8,
-        "total_amount": 1293317109353.0,
-        "median_change": -0.781,
-        "cap_weighted_change": 0.127,
-        "median_turnover": 1.795,
-        "p90_turnover": 5.862,
+        "active_count": 5579,
+        "advances": 1766,
+        "declines": 3641,
+        "unchanged": 172,
+        "advance_ratio": 32.66,
+        "total_amount": 1325846146222.0,
+        "median_change": -0.792,
+        "cap_weighted_change": 0.121,
+        "median_turnover": 1.804,
+        "p90_turnover": 5.883,
         "tail_heat_10": 4.02,
-        "tail_heat_15": 2.21,
-        "microcap_spread": -0.931,
-        "limit_up_est": 73,
-        "broken_est": 43,
-        "limit_down_est": 22,
-        "coverage": 0.964,
+        "tail_heat_15": 2.17,
+        "microcap_spread": -0.949,
+        "limit_up_est": 76,
+        "broken_est": 47,
+        "limit_down_est": 23,
+        "coverage": 1.0,
         "breadth_valid": true
       },
       "breadth_source": "live_cross_section",
-      "csi2000_pct": -0.164,
-      "csi300_pct": 0.059,
-      "microcap_spread": -0.223,
-      "session": "close"
+      "csi2000_pct": -0.16,
+      "csi300_pct": 0.06,
+      "microcap_spread": -0.22,
+      "session": "intraday_preview"
     },
-    "flow": {
-      "date": "2026-11-26",
-      "main_net": 824774656.0,
-      "small_net": 7094448128.0,
-      "mid_net": -7919218688.0,
-      "super_net": -7496118272.0,
-      "large_net": 8320892928.0,
-      "divergence": 6269673472.0
-    },
+    "flow": null,
     "margin": {
       "date": "2026-11-25",
       "rzye": 2121385893225.0,
@@ -1664,7 +1651,7 @@
     "limit_pool": {
       "available": true,
       "estimated": false,
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "limit_up_count": 65,
       "broken_board_count": 29,
       "limit_down_count": 5,
