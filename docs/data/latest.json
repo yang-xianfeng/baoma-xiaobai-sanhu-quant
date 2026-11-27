@@ -3,11 +3,11 @@
   "version": "2.1_quant",
   "market_date": "2026-11-27",
   "data_status": "finalized",
-  "session_mode": "close",
-  "session_title": "收盘结算版 · 全市场横截面定稿",
+  "session_mode": "holiday_review",
+  "session_title": "节假日复盘 · 最近交易日定稿",
   "revision": "",
-  "updated_at": "2026-11-27T16:55:03.888906+08:00",
-  "updated_at_cst": "2026-11-27 16:55:03 CST",
+  "updated_at": "2026-11-28T01:34:04.459582+08:00",
+  "updated_at_cst": "2026-11-28 01:34:04 CST",
   "scores": {
     "composite": 59.3,
     "baoma": 27.3,
@@ -81,7 +81,7 @@
     },
     "microcap_premium": {
       "spread_pct": 4.185,
-      "z": 3.359
+      "z": 3.217
     },
     "limit_heat": {
       "limit_up_count": 417,
@@ -187,7 +187,7 @@
         "score": 99.1,
         "raw": {
           "spread_pct": 4.185,
-          "z": 3.359
+          "z": 3.217
         },
         "available": true,
         "estimated": false,
@@ -1477,7 +1477,7 @@
         "name": "index_quotes",
         "status": "ok",
         "source": "Tencent",
-        "date": "2026-11-27",
+        "date": "2026-11-28",
         "detail": ""
       },
       {
@@ -1505,14 +1505,14 @@
         "name": "sectors",
         "status": "partial",
         "source": "Eastmoney+Sina",
-        "date": "2026-11-27",
+        "date": "2026-11-28",
         "detail": "200 EM + 383 Sina; flow=order_flow"
       },
       {
         "name": "universe",
         "status": "ok",
         "source": "Sina",
-        "date": "2026-11-27",
+        "date": "2026-11-28",
         "detail": "5579 active stocks"
       }
     ],
@@ -1640,7 +1640,7 @@
       "csi2000_pct": 8.351,
       "csi300_pct": 4.166,
       "microcap_spread": 4.185,
-      "session": "close"
+      "session": "holiday_review"
     },
     "flow": {
       "date": "2026-11-27",
